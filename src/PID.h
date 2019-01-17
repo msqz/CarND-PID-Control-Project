@@ -2,6 +2,11 @@
 #define PID_H
 
 class PID {
+ private:
+  double cte_prev;
+  double sum_cte;
+  double t_prev;
+  long now();
  public:
   /**
    * Constructor

@@ -51,7 +51,6 @@ int main() {
         if (event == "telemetry") {
           // j[1] is the data JSON object
           double cte = std::stod(j[1]["cte"].get<string>());
-          double speed = std::stod(j[1]["speed"].get<string>());
 
           pid.UpdateError(cte);
           double steer_value = -pid.TotalError();

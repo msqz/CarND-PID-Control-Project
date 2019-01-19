@@ -61,20 +61,13 @@ int main() {
             steer_value = 1.0;
           }
 
-          double speed_norm = speed / 100.0;
-          // double throttle = log10(1 / abs(steer_value)) - 0.5;
-          double throttle = pow((-sqrt(abs(steer_value) * speed_norm) + 1.0), 5);
-          // if (throttle > 0.3) {
-          //   throttle = 0.3;
-          // }
-
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value
                     << std::endl;
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
-          msgJson["throttle"] = throttle;
+          msgJson["throttle"] = 0.2;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);

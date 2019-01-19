@@ -1,5 +1,6 @@
 #include "PID.h"
 #include <chrono>
+#include <vector>
 
 /**
  * TODO: Complete the PID class. You may add any additional desired functions.
@@ -16,25 +17,14 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
 }
 
 void PID::UpdateError(double cte) {
+  double cte_prev = this->p_error;
   this->p_error = cte;
-
-  this->sum_cte += cte;
-  this->i_error = this->sum_cte;
-
-  long now = this->now();
-  long dt = now - this->t_prev;
-  this->d_error = (cte - this->cte_prev) / dt;
-  this->t_prev = now;
+  this->i_error += cte;
+  this->d_error = cte - cte_prev;
 }
 
 double PID::TotalError() {
   return this->Kp * p_error +
          this->Ki * i_error +
          this->Kd * d_error;
-}
-
-long PID::now() {
-  return std::chrono::duration_cast<std::chrono::milliseconds>(
-             std::chrono::system_clock::now().time_since_epoch())
-      .count();
 }
